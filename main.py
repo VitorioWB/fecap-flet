@@ -1,3 +1,4 @@
+
 import flet as ft
 import requests
 
@@ -6,21 +7,19 @@ def main(page: ft.Page):
 
     def on_send_click(e):
         text = txt_input.value
-        response = requests.post("http://localhost:8080/sentiments", json={"text": text})
-        sentiment_response = ""
+        response = requests.post("http://0.0.0.0:8080/hello", json={"name": text})
         if response.status_code == 200:
-            sentiment = response.json()["sentiment"]
-            sentiment_response = "😊" if sentiment == "positivo" else "😞"
+            output = response.json()["message"]
         else:
-            sentiment_response = "Erro ao processar o sentimento"
+            output = "Erro ao processar"
 
-        lbl_output.value = sentiment_response
+        lbl_output.value = output
         lbl_output.update()
 
         txt_input.value = ""
         page.update()
 
-    txt_input = ft.TextField(hint_text="Digite seu texto aqui", width=300, autofocus=True)
+    txt_input = ft.TextField(hint_text="Digite seu nome aqui", width=300, autofocus=True)
     send_button = ft.ElevatedButton(text="Enviar", on_click=on_send_click)
 
     input_container = ft.Row(
@@ -38,3 +37,4 @@ def main(page: ft.Page):
     page.add(main_container)
 
 ft.app(target=main)
+
