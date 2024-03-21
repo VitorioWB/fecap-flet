@@ -1,8 +1,18 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import List
+import uvicorn
 
 app = FastAPI()
+
+@app.get("/")
+async def root():
+    return {"message": "Hello World"}
+
+@app.get("/favicon.ico")
+async def favicon():
+    return {"message": "No favicon available"}, 404
+
 
 class Task(BaseModel):
     task_name: str

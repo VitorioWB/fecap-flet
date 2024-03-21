@@ -1,11 +1,16 @@
 import flet as ft
 import aiohttp
+import uvicorn
+
+base_url = "http://localhost:8000"
 
 class TodoApp(ft.UserControl):
     def __init__(self, base_url):
         super().__init__()
         self.base_url = base_url
         self.tasks = []
+        self.tasks_display = None  # Definindo tasks_display como None inicialmente
+
 
     async def load_tasks(self):
         async with aiohttp.ClientSession() as session:
@@ -82,7 +87,7 @@ class TodoApp(ft.UserControl):
 
 
 async def main(page: ft.Page):
-    base_url = "http://localhost:8080"  # Update with your FastAPI server URL
+    base_url = "http://localhost:8000"  # Update with your FastAPI server URL
     page.title = "Agenda de Lembretes"
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
     page.scroll = ft.ScrollMode.ADAPTIVE
